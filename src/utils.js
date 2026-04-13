@@ -137,11 +137,11 @@ export class WSSharedDoc extends Y.Doc {
  * @param {boolean} gc - whether to allow gc on the doc (applies only when created)
  * @return {WSSharedDoc}
  */
-export const getYDoc = (docname, gc = true) => map.setIfUndefined(docs, docname, () => {
+export const getYDoc = (docname, gc = true) => map.setIfUndefined(docs, docname, async () => {
   const doc = new WSSharedDoc(docname)
   doc.gc = gc
   if (persistence !== null) {
-    persistence.bindState(docname, doc)
+    await persistence.bindState(docname, doc)
   }
   docs.set(docname, doc)
   return doc
